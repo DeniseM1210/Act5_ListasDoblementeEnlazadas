@@ -107,6 +107,22 @@ class ListaDoblementeEnlazada{
 		}
 	}
 	
+	//3b) Eliminar elemento al final
+	public void eliminarElementoFinal() {
+		Nodo nodoActual = nodoInicio;
+		
+		if(verificarListaVacia()) {
+			System.out.println("No hay elementos para eliminar");
+		}else if(nodoInicio == nodoFin) {
+			nodoInicio = nodoFin = null;
+		}else {
+			while(nodoActual.getNodoSiguiente() != nodoFin) {
+				nodoActual = nodoActual.getNodoSiguiente();
+			}
+			nodoActual.setNodoSiguiente(null);
+			nodoFin = nodoActual;
+		}
+	}
 	
 	//4) Mostrar Elementos
 	public void mostrarElementos() {
@@ -134,6 +150,10 @@ public class PruebaListaDoblementeEnlazada {
 		
 		System.out.println("\n---Eliminar elemento inicio---");
 		lde.eliminarElementoInicio();
+		lde.mostrarElementos();
+		
+		System.out.println("\n --- Eliminar elemento final ---");
+		lde.eliminarElementoFinal();
 		lde.mostrarElementos();
 
 	}
