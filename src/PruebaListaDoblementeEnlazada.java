@@ -124,6 +124,38 @@ class ListaDoblementeEnlazada{
 		}
 	}
 	
+	//3c) Eliminar dato especifico
+	public int eliminarDatoEspecifico(int dato) {
+		if(nodoInicio == null) {// caso 1: lista vacia 
+			return -1;
+		}else if(nodoInicio == nodoFin && nodoInicio.getDato() == dato) { //caso 2: Hay un solo nodo
+			System.out.println("encontrado en el primero NODO");
+			int n = nodoInicio.getDato();
+			nodoInicio = nodoFin = null;
+			return n;
+		}else { // caso 3: hay mas de un nodo y el dato puede estar en alguno de ellos
+			Nodo nodoAnterior, nodoSiguiente;
+			nodoAnterior = nodoInicio;
+			nodoSiguiente = nodoInicio.getNodoSiguiente();
+			
+			while(nodoSiguiente != null && nodoSiguiente.getDato() != dato) {
+				nodoAnterior = nodoAnterior.getNodoSiguiente();
+				nodoSiguiente = nodoSiguiente.getNodoSiguiente();
+			}
+			
+			if(nodoSiguiente != null && nodoSiguiente.getDato() == dato) {
+				int n = nodoSiguiente.getDato();
+				nodoAnterior.setNodoSiguiente(nodoSiguiente.getNodoSiguiente());
+				nodoSiguiente = nodoSiguiente.getNodoSiguiente();
+				
+				return n;
+			}else {
+				return -2;
+			}
+		}
+		
+	}
+	
 	//4) Mostrar Elementos
 	public void mostrarElementos() {
 		Nodo nodoActual = nodoInicio;
@@ -145,7 +177,6 @@ public class PruebaListaDoblementeEnlazada {
 		lde.agregarAlFinal(10);
 		lde.agregarAlFinal(11);
 		
-		
 		lde.mostrarElementos();
 		
 		System.out.println("\n---Eliminar elemento inicio---");
@@ -154,6 +185,26 @@ public class PruebaListaDoblementeEnlazada {
 		
 		System.out.println("\n --- Eliminar elemento final ---");
 		lde.eliminarElementoFinal();
+		lde.mostrarElementos();
+		
+		System.out.println("\n -----------------------------------");
+		//Se agregaron mas datos para pruebas
+		lde.agregarAlInicio(12);
+		lde.agregarAlFinal(17);
+		lde.agregarAlInicio(15);
+		
+		lde.mostrarElementos();
+		
+		System.out.println("\n --- Eliminar dato especifico ---");
+		int num = lde.eliminarDatoEspecifico(7);
+	
+		if(num == -1)
+			System.out.println("Lista vacia");
+		else if(num == -2)
+			System.out.println("No se encontró el dato");
+		else
+			System.out.println("Se eliminó el " + num + " correctamente");
+		
 		lde.mostrarElementos();
 
 	}
